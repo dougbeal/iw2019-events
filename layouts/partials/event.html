@@ -1,0 +1,15 @@
+{{/* -*- engine: go -*- */}}
+<div class='{{ partial "mf2/event" . }}'>
+    {{ with .event }}
+    <span class='{{ partial "m2/name" . }}'>{{ .name }}</span>
+    <div class='p-summary'>{{ .summary }}</div>
+    <span class='{{ partial "mf2/start" . }}'>{{ .start }}</span>
+    <span class='{{ partial "mf2/end" . }}'>{{ .end }}</span>
+    {{ if .location -}}
+    <span class='p-location location h-card'>
+        {{ .location }}
+    </span>
+    {{ end }}
+    {{ end }}    
+    
+</div>
