@@ -1,11 +1,12 @@
 +++
-event.uid = ''
-event.start = ''
-event.end = ''
-event.name = ''
-event.organizer = ['']
-event.location = ''
-event.summary = ''
-event.category
+[event]
+'uuid' = ''
+'start' = '{{ .Date }}'
+'end' = '{{ .Date }}'
+'name' = 'This is an Event'
+'organizer' = ['BB8']
+'location' = 'Enterprise'
+'summary' = ''
+'category' = ''
 +++
 {{/* event.content */}}

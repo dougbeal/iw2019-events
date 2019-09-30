@@ -1,8 +1,7 @@
-<h1>Events</h1>
+<h1>Events List</h1>
 <ul>
     {{ range .Pages }}
-    <li>
-        {{ partial "event.html" . }}
-    </li>
+    <li>{{ partial "event.html" . }}</li>
     {{ end }}
 </ul>
+

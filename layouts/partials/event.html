@@ -1,15 +1,15 @@
 {{/* -*- engine: go -*- */}}
-<div class='{{ partial "mf2/event" . }}'>
-    {{ with .event }}
-    <span class='{{ partial "m2/name" . }}'>{{ .name }}</span>
-    <div class='p-summary'>{{ .summary }}</div>
-    <span class='{{ partial "mf2/start" . }}'>{{ .start }}</span>
-    <span class='{{ partial "mf2/end" . }}'>{{ .end }}</span>
-    {{ if .location -}}
+<div class='{{ partial "mf2/event.mf" . }}'>
+    <span class='{{ partial "mf2/name.mf" . }}'>{{ .Params.event.name }}</span>
+    <div class='p-summary'>{{ .Params.event.summary }}</div>
+    <span class='{{ partial "mf2/start.mf" . }}'>{{ .Params.event.start }}</span>
+    <span class='{{ partial "mf2/end.mf" . }}'>{{ .Params.event.end }}</span>
+    {{ if .Params.event.location -}}
     <span class='p-location location h-card'>
-        {{ .location }}
+        {{ range first 1 .Params.event.location -}}
+        {{ "<" | safeHTML }}!--# include file="location/{{ . | urlize }}/index.html" -->
+                                                                                   
+        {{- end }}
     </span>
-    {{ end }}
     {{ end }}    
-    
 </div>
