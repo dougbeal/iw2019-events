@@ -4,12 +4,16 @@
     <div class='p-summary'>{{ .Params.event.summary }}</div>
     <span class='{{ partial "mf2/start.mf" . }}'>{{ .Params.event.start }}</span>
     <span class='{{ partial "mf2/end.mf" . }}'>{{ .Params.event.end }}</span>
-    {{ if .Params.event.location -}}
-    <span class='p-location location h-card'>
-        {{ range first 1 .Params.event.location -}}
-        {{ "<" | safeHTML }}!--# include file="location/{{ . | urlize }}/index.html" -->
-                                                                                   
-        {{- end }}
-    </span>
+    {{ if .Params.event.location }}
+    {{   range $locationKey := first 1 .Params.event.location -}}
+    {{     range $locationData := $.Site.Data.location }}
+    {{       if eq $locationData.uuid $locationKey }}
+    {{         partial "location.html" $locationData }}
+    {{       end }}
+    {{     end }}        
+    {{-  end }}
+    {{ else }}
+    No location
     {{ end }}    
 </div>
+
