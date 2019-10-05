@@ -1,7 +1,8 @@
-<h1>Events List</h1>
+{{ define "main" }}
 <ul>
     {{ range .Pages }}
     <li>{{ partial "event.html" . }}</li>
     {{ end }}
 </ul>
+{{ end }}
 
