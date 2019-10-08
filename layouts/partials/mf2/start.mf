@@ -1,0 +1,2 @@
+dt-start
+  {{- if .Params.mfcompat | default .Site.Params.mfcompat | default .Site.Data.default.mfcompat }} dtstart{{ end -}}
