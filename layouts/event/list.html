@@ -1,7 +1,7 @@
 {{ define "main" }}
-<ul>
+<ul class="h-feed">
     {{ range .Pages }}
-    <li>{{ partial "event.html" . }}</li>
+    <li class="h-entry">{{ partial "event.html" . }}</li>
     {{ end }}
 </ul>
 {{ end }}
