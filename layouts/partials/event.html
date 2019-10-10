@@ -1,28 +1,57 @@
 {{/* -*- engine: go -*- */}}
-<div class='{{ partial "mf2/event.mf" . }}'>
+<div class='post {{ partial "mf2/event.mf" . }}'>
+    <h1 class="post-title">
+        <a class='{{ partial "mf2/name.mf" . }}' href="{{ .Permalink }}">{{ .Params.event.name }}</a>
+        [{{ dateFormat "January 2 2006" .Params.event.start }}]
+    </h1>
+    <div class='post-content p-summary'>{{ .Params.event.summary | markdownify }}</div>
     <ul>
         <li>
-            <span class='{{ partial "mf2/name.mf" . }}'>{{ .Params.event.name }}</span>
+            <span class='{{ partial "mf2/start.mf" . }}'>
+                <time class="post-date value">
+                    {{ dateFormat "Mon, 2 January 2006 15:04 MST -07" .Params.event.start }}
+                </time>
+            </span>
+            ...
+            <span class='{{ partial "mf2/end.mf" . }}'>
+                <time class="post-date value">
+                    {{/* only display month/day again if start and end are on different days */}}
+                    {{ if (ne (dateFormat "20060102" .Params.event.start) (dateFormat "20060102" .Params.event.end))  }}
+                    {{   dateFormat "Mon, 2 January 2006 " .Params.event.end  }}
+                    {{ end }}
+                    {{ dateFormat "15:04  MST -07" .Params.event.end  }}
+                </time>
+            </span>
+        {{ with .Params.event.schedule }}
+            <ul>
+                {{ range $timeblock := . }}
+                <li>
+                    <time class="post-date value">
+                        {{ dateFormat "3:04" $timeblock.start  }} to {{ dateFormat "3:04" $timeblock.end  }}
+                    </time>
+                    {{ $timeblock.description  }}
+                </li>
+                {{ end }}
+            </ul>
         </li>
+        {{ end }}
         <li>
-            <div class='p-summary'>{{ .Params.event.summary }}</div>
-        </li>
-        <li>
-            <span class='{{ partial "mf2/start.mf" . }}'>from {{ .Params.event.start }}</span>
-            <span class='{{ partial "mf2/end.mf" . }}'>to {{ .Params.event.end }}</span>
-        </li>
-        <li>
-    {{ if .Params.event.organizer }}
-    {{   range $organizerKey := first 1 .Params.event.organizer -}}
-    {{     range $organizerData := $.Site.Data.author }}
-    {{       if eq $organizerData.url $organizerKey }}
-    {{         partial "author.html" $organizerData }}
-    {{       end }}
-    {{     end }}        
-    {{-  end }}
-    {{ else }}
-    No organizer
-    {{ end }}
+            {{ if .Params.event.organizer }}
+            <div>
+            {{- if (gt .Params.event.organizer 1) -}}
+            {{-   pluralize "organizer" -}}
+            {{- else -}}
+            organizer
+            {{- end -}}:
+            {{-  range $organizerKey := first 1 .Params.event.organizer -}}
+            {{-     range $organizerData := $.Site.Data.author }}
+            {{-       if eq $organizerData.url $organizerKey }}
+            {{-         partial "author.html" $organizerData }}
+            {{-       end }}
+            {{-     end }}
+            {{-  end }}
+            </div>
+            {{ end }}
         </li>
     <li>
     {{ if .Params.event.location }}
@@ -31,7 +60,7 @@
     {{       if eq $locationData.uuid $locationKey }}
     {{         partial "location.html" $locationData }}
     {{       end }}
-    {{     end }}        
+    {{     end }}
     {{-  end }}
     {{ else }}
     No location
@@ -39,4 +68,3 @@
     </li>
     </ul>
 </div>
-
