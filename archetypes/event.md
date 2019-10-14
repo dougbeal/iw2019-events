@@ -13,4 +13,7 @@ event:
   - description: what this is
     end: '{{ .Date }}'
     start: '{{ .Date }}'
+  invite:
+  - personA
+  - personB
 ---
