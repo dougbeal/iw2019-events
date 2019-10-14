@@ -37,7 +37,7 @@
         {{ end }}
         <li>
             {{ if .Params.event.organizer }}
-            <div>
+            <span>
             {{- if (gt .Params.event.organizer 1) -}}
             {{-   pluralize "organizer" -}}
             {{- else -}}
@@ -50,7 +50,7 @@
             {{-       end }}
             {{-     end }}
             {{-  end }}
-            </div>
+            </span>
             {{ end }}
         </li>
     <li>
@@ -68,7 +68,7 @@
     </li>
 
     {{ if .Params.event.invite }}
-    <div>
+    <span>
         Invitees:
         <ul>
             {{-  range $inviteeKey := .Params.event.invite -}}
@@ -79,7 +79,7 @@
             {{-     end }}
             {{-  end }}
         </ul>
-    </div>
+    </span>
     {{ end }}
     </ul>
 </div>
