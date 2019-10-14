@@ -1,6 +1,9 @@
 {{/* -*- engine: go -*- */}}
 <div class='post {{ partial "mf2/event.mf" . }}'>
     <h1 class="post-title">
+        {{ if (isset .Params.event "icon") }}
+        <img src="{{ .Site.BaseURL }}{{ .Params.event.icon }}" />
+        {{ end }}
         <a class='{{ partial "mf2/name.mf" . }}' href="{{ .Permalink }}">{{ .Params.event.name }}</a>
         [{{ dateFormat "January 2 2006" .Params.event.start }}]
     </h1>
