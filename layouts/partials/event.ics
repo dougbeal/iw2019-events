@@ -1,0 +1,18 @@
+BEGIN:VEVENT
+SUMMARY:{{ .Params.event.name }}
+UID:{{.Params.event.uuid}}@{{ .Site.Title | plainify }}
+DESCRIPTION:{{ trim (.Params.event.summary | plainify) "\n" }} details at {{ .Permalink }}
+URL:{{ .Permalink }}
+DTSTAMP:{{dateFormat "20060102T150405Z" .Date}}
+DTSTART;TZID="US/Pacific":{{ dateFormat "20060102T150405" .Params.event.start }}
+DTEND;TZID="US/Pacific":{{ dateFormat "20060102T150405" .Params.event.end }}
+{{- if .Params.event.location }}
+{{-   range $locationKey := first 1 .Params.event.location -}}
+{{-     range $locationData := $.Site.Data.location }}
+{{-       if eq $locationData.uuid $locationKey }}
+{{-         partial "location.ics" $locationData -}}
+{{       end -}}
+{{     end -}}
+{{  end -}}
+{{ end }}
+END:VEVENT

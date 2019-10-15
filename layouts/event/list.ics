@@ -1,0 +1,8 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//{{ (urls.Parse .Site.BaseURL).Host | plainify }}//{{ .Site.Title | plainify }}//EN
+CALSCALE:GREGORIAN
+{{ range (.Pages.ByParam "event.start").Reverse }}
+{{- partial "event.ics" . -}}
+{{ end -}}
+END:VCALENDAR
