@@ -1,4 +1,5 @@
 {{ define "main" }}
+
 <div class="h-feed">
     {{ range (.Pages.ByParam "event.start").Reverse }}
     <div class="h-entry">{{ partial "event.html" . }}</div>
