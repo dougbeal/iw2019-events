@@ -88,10 +88,42 @@
     {{ "<!-- webmentions go here -->" | safeHTML }}
     {{ with .Scratch.Get "Webmentions" }}
     <div class="webmention">
-        <h2 class="response-title">Responses</h2>    
-        {{ range .children }}
-        {{   partial "card.html" . }} says <a href='{{ index . "wm-source" }}'>{{ .rsvp }}</a>
+        {{ $property := "rsvp" }}
+        {{ if (gt (len (where .children "wm-property" $property)) 0 )}}
+        <h2 class="response-title">RSVPs</h2>
+        {{ range where .children "wm-property" $property }}
+        {{   partial "card.html" . }} says <a href='{{ index . "url" }}'>{{ .rsvp }}</a>
         {{ end }}
+        {{ end }}
+
+        {{ $property := "in-reply-to" }}
+        {{ if (gt (len (where .children "wm-property" $property)) 0 )}}
+        <h2 class="response-title">Replies</h2>
+        {{ range where .children "wm-property" $property }}
+        {{   partial "card.html" . }} says <a href='{{ index . "url" }}'>{{ .text }}</a>
+        {{ end }}
+        {{ end }}
+
+        {{ $property := "mention-of" }}
+        {{ if (gt (len (where .children "wm-property" $property)) 0 )}}
+        <h2 class="response-title">Mentions</h2>
+        {{ range where .children "wm-property" $property }}
+        {{   partial "card.html" . }}
+        {{ if .text }}
+        says <a href='{{ index . "url" }}'>{{ .text }}</a>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+
+        {{ $property := "like-of" }}
+        {{ if (gt (len (where .children "wm-property" $property)) 0 )}}
+        <div class="response-title">👍
+            {{ with where .children "wm-property" $property }}
+            {{   partial "facepile.html" . }}
+            {{ end }}
+        </div>
+        {{ end }}
+
     </div>
     {{ end }}
     {{ .Content }}

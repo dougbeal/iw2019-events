@@ -1,11 +1,8 @@
 {{ define "main" }}
 
-
-
-
 {{ $baseTarget := print ( trim $.Site.Params.productionBaseURL "/" ) "/" (trim (urls.Parse .Permalink).Path "/") }}
 {{ $target := print "target[]=" $baseTarget  "&target[]=" $baseTarget "/" }}
-{{ $webmentions := getJSON "https://webmention.io/api/mentions.jf2?" $target "&token=" $.Site.Data.secrets.webmention_io "&wm-property=rsvp"  }}
+{{ $webmentions := getJSON "https://webmention.io/api/mentions.jf2?" "token=" $.Site.Data.secrets.webmention_io "&" $target }}
 {{ .Scratch.Set "Webmentions" $webmentions }}
 {{ partial "event.html" . }}
 {{ .Scratch.Delete "Webmentions" }}
