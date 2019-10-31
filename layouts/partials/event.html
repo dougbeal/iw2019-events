@@ -1,5 +1,5 @@
 {{/* -*- engine: go -*- */}}
-<div class='post {{ partial "mf2/event.mf" . }}'>
+<div class='post {{ partial "mf2/event.mf" . }} h-entry'>
     <h1 class="post-title">
         {{ with .Params.event.icon }}
         <img src="{{ $.Site.BaseURL }}{{ . }}" />
